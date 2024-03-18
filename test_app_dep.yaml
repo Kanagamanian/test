@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: testapp1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment  # Name of the deployment
+  namespace: testapp1      # Specify the testapp1 namespace
+spec:
+  replicas: 2              # Number of Nginx pods to run (can be scaled)
+  selector:
+    matchLabels:
+      app: nginx           # Label to identify Nginx pods
+  template:
+    metadata:
+      labels:
+        app: nginx           # Label for the pod template
+    spec:
+      containers:
+      - name: nginx           # Name of the container
+        image: nginx:latest   # Docker image for Nginx
+        ports:
+        - containerPort: 80    # Port exposed by Nginx container
